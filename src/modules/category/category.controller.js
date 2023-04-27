@@ -3,6 +3,7 @@ import {categoryModel} from "../../../database/models/category.model.js"
 import { catchAsyncError } from "../../utils/ErrorHandling/catchAsyncError.js"
 import { AppError } from "../../utils/ErrorHandling/AppError.js"
 import * as factory from "../handlers/factory.handler.js"
+import ApiFeatures from "../../utils/ApiFeatures/ApiFeatures.js"
 
 
 export const createCategory = catchAsyncError(async(req,res,next)=>{
@@ -13,7 +14,10 @@ export const createCategory = catchAsyncError(async(req,res,next)=>{
 })
 
 export const getAllCategories = catchAsyncError(async(req,res,next)=>{
-    let result = await categoryModel.find({})
+    let apiFeatures = new ApiFeatures(categoryModel.find(),req.query)
+    .paginate().filter().sort().fields()
+
+    let result = await apiFeatures.mongooseQuery
     result? res.status(200).json({message: "success", status:200 , result}) : next(new AppError("failed",500))
 })
 
