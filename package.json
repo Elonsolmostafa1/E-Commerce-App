@@ -21,6 +21,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "joi": "^17.9.2",
     "mongoose": "^7.0.5",
     "morgan": "^1.10.0",
     "slugify": "^1.6.6"
