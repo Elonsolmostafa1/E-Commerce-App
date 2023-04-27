@@ -1,6 +1,7 @@
 import express from "express"
 import dbConnection from "./database/dbConnection.js";
 import * as dotenv from 'dotenv'
+import categoryRouter from "./src/modules/category/category.router.js";
 
 
 dotenv.config()
@@ -12,7 +13,7 @@ app.use(express.json());
 dbConnection()
 
 
-
+app.use("/categories" , categoryRouter)
 app.all('*',(req,res,next)=>{next(new AppError("Invalid url. Page not found",404))})
 
 
