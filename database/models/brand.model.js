@@ -9,6 +9,12 @@ const brandSchema = mongoose.Schema({
         minLength: [2 , "too short brand name"]
     },
 
+    slug:{
+        type:String,
+        lowercase:true,
+        required:true
+    },
+
     logo: String,
 
     }, {timeStamps:true})

@@ -6,8 +6,10 @@ import * as dotenv from 'dotenv'
 import dbConnection from "./database/dbConnection.js";
 import categoryRouter from "./src/modules/category/category.router.js";
 import subCategoryRouter from "./src/modules/subCategory/subCategory.router.js"
+import brandRouter from "./src/modules/brand/brand.router.js"
 import { globalErrorHandling } from "./src/utils/ErrorHandling/globalErrorHandling.js";
 import { AppError } from "./src/utils/ErrorHandling/AppError.js";
+import productRouter from "./src/modules/product/product.router.js"
 
 
 dotenv.config()
@@ -22,6 +24,8 @@ dbConnection()
 
 app.use("/categories" , categoryRouter)
 app.use("/subCategories" , subCategoryRouter)
+app.use("/brands" , brandRouter)
+app.use("/products" , productRouter)
 app.all('*',(req,res,next)=>{next(new AppError("Invalid url. Page not found",404))})
 
 app.use(globalErrorHandling)

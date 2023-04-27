@@ -3,9 +3,9 @@ import mongoose from 'mongoose'
 export default function dbConnection()
 {
     mongoose.set('strictQuery', true)
-    mongoose.connect(process.env.DB_CONNECTION).then(()=>{
-    console.log('DB connected successfully')
-    })
+    mongoose.connect(process.env.DB_CONNECTION)
+    .then(()=>{console.log('DB connected successfully')})
+    .catch((err)=>{console.log(`DB error: ${err}}`)})
 }
 
 

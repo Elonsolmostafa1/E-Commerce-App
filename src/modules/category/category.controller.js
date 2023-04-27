@@ -2,6 +2,7 @@ import slugify from "slugify"
 import {categoryModel} from "../../../database/models/category.model.js"
 import { catchAsyncError } from "../../utils/ErrorHandling/catchAsyncError.js"
 import { AppError } from "../../utils/ErrorHandling/AppError.js"
+import * as factory from "../handlers/factory.handler.js"
 
 
 export const createCategory = catchAsyncError(async(req,res,next)=>{
@@ -22,11 +23,7 @@ export const getCategory = catchAsyncError(async(req,res,next)=>{
     result? res.status(200).json({message: "success", status:200 , result}) : next(new AppError("category not found",404))
 })
 
-export const deleteCategory = catchAsyncError(async(req,res,next)=>{
-    const {id} = req.params
-    let result = await categoryModel.findByIdAndDelete(id)
-    result? res.status(200).json({message: "success", status:200}) : next(new AppError("category not found",404))
-})
+export const deleteCategory = factory.deleteOne(categoryModel)
 
 export const updateCategory = catchAsyncError(async(req,res,next)=>{
     const {id} = req.params
