@@ -19,4 +19,8 @@ const categorySchema = mongoose.Schema({
 
     }, {timeStamps:true})
 
+    categorySchema.post("init",(doc)=>{
+        doc.image = process.env.BASE_URL + "/category/" + doc.image
+    })
+
 export const categoryModel = mongoose.model("category", categorySchema)

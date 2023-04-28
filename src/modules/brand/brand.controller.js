@@ -7,8 +7,9 @@ import * as factory from "../handlers/factory.handler.js"
 
 
 export const createBrand = catchAsyncError(async(req,res,next)=>{
-    const {name} = req.body
-    let result = new brandModel({name , slug:slugify(name)})
+    req.body.logo = req.file.filename
+    req.body.slug = slugify(req.body.name)
+    let result = new brandModel(req.body)
     await result.save()
     result? res.status(201).json({message: "success", status:201 , result}) : next(new AppError("failed",500))
 })
@@ -28,7 +29,8 @@ export const deleteBrand = factory.deleteOne(brandModel)
 
 export const updateBrand = catchAsyncError(async(req,res,next)=>{
     const {id} = req.params
-    const {name} = req.body
-    let result = await brandModel.findByIdAndUpdate(id,{name,slug:slugify(name)},{new:true})
+    req.body.logo = req.file.filename
+    req.body.slug = slugify(req.body.name)
+    let result = await brandModel.findByIdAndUpdate(id,req.body,{new:true})
     result? res.status(200).json({message: "success" , status:200, result}) : next(new AppError("Brand not found",404))
 })

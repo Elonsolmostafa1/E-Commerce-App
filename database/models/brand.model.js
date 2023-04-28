@@ -19,4 +19,8 @@ const brandSchema = mongoose.Schema({
 
     }, {timeStamps:true})
 
+    brandSchema.post("init",(doc)=>{
+        doc.logo = process.env.BASE_URL + "/brand/" + doc.logo
+    })
+
 export const brandModel = mongoose.model("brand", brandSchema)

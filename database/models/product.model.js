@@ -81,4 +81,9 @@ const productSchema = mongoose.Schema({
 
     }, {timeStamps:true})
 
+    productSchema.post("init",(doc)=>{
+        doc.imgCover = process.env.BASE_URL + "/product/" + doc.imgCover
+        doc.images = doc.images.map(path=>process.env.BASE_URL + "/product/" + path)
+    })
+
 export const productModel = mongoose.model("product", productSchema)

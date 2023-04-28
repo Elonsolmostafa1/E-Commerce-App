@@ -8,6 +8,9 @@ import ApiFeatures from "../../utils/ApiFeatures/ApiFeatures.js"
 
 
 export const createProduct = catchAsyncError(async(req,res,next)=>{
+    console.log(req.files)
+    req.body.imgCover = req.files.imgCover[0].filename
+    req.body.images = req.files.images.map(img=>img.filename)
     req.body.slug = slugify(req.body.title)
     let result = new productModel(req.body)
     await result.save()

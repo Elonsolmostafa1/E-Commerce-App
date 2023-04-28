@@ -7,8 +7,9 @@ import ApiFeatures from "../../utils/ApiFeatures/ApiFeatures.js"
 
 
 export const createCategory = catchAsyncError(async(req,res,next)=>{
-    const {name} = req.body
-    let result = new categoryModel({name , slug:slugify(name)})
+    req.body.image = req.file.filename
+    req.body.slug = slugify(req.body.name)
+    let result = new categoryModel(req.body)
     await result.save()
     result? res.status(201).json({message: "success", status:201 , result}) : next(new AppError("failed",500))
 })
@@ -31,8 +32,9 @@ export const deleteCategory = factory.deleteOne(categoryModel)
 
 export const updateCategory = catchAsyncError(async(req,res,next)=>{
     const {id} = req.params
-    const {name} = req.body
-    let result = await categoryModel.findByIdAndUpdate(id,{name,slug:slugify(name)},{new:true})
+    req.body.image = req.file.filename
+    req.body.slug = slugify(req.body.name)
+    let result = await categoryModel.findByIdAndUpdate(id,req.body,{new:true})
     result? res.status(200).json({message: "success" , status:200, result}) : next(new AppError("category not found",404))
 })
 
