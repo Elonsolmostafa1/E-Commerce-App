@@ -45,7 +45,9 @@ const userSchema = mongoose.Schema({
     verified:{
         type: Boolean,
         defualt: false
-    }
+    },
+
+    wishlist:[{type:mongoose.Types.ObjectId , ref:"product"}]
     
     }, {timeStamps:true})
 
